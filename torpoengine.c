@@ -13,7 +13,7 @@ int main()
 
     while (!closed(window))
     {
-        printf("%d, %d\n", getWidth(window), getHeight(window));
+        // printf("%d, %d\n", getWidth(window), getHeight(window));
         clear();
 #if 1
         glBegin(GL_QUADS);
