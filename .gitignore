@@ -1,0 +1,5 @@
+*.o
+engine
+.dist
+.vscode
+.DS_Store
