@@ -1,7 +1,10 @@
+#include <time.h>
 #include "src/graphics/window.h"
 
 int main()
 {
+    clock_t begin = clock();
+
     Window_t* window = windowCreate("Torpo!", 960, 540);
     glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
 
@@ -27,5 +30,11 @@ int main()
 #endif
         update(window);
     }
+
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+
+    printf("Time: %lf\n", time_spent);
+
     return 0;
 }
