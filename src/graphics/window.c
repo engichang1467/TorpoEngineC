@@ -1,18 +1,18 @@
 
 #include "window.h"
 
-Window_t* windowCreate(const char *title, int width, int height)
+Window* windowCreate(const char *title, int width, int height)
 {
     // printf("creating window\n");
-    Window_t* window = malloc(sizeof(Window_t));
+    Window* window = malloc(sizeof(Window));
     // printf("window created\n");
-    window->m_Title = title;
+    window->title = title;
     // printf("set title\n");
-    window->m_Width = width;
+    window->width = width;
     // printf("set width\n");
-    window->m_Height = height;
+    window->height = height;
     // printf("set height\n");
-    window->m_Window = NULL;
+    window->windowGL = NULL;
 
     if (!init(window))
     {
@@ -24,13 +24,13 @@ Window_t* windowCreate(const char *title, int width, int height)
 }
 
 
-void windowDestroy(Window_t* window){
+void windowDestroy(Window* window){
     free(window);
     glfwTerminate();
 }
 
 
-bool init(Window_t* window)
+bool init(Window* window)
 {
     if (!glfwInit())
     {
@@ -38,15 +38,15 @@ bool init(Window_t* window)
         return false;
     }
 
-    window->m_Window = glfwCreateWindow(window->m_Width, window->m_Height, window->m_Title, NULL, NULL);
-    if (!window->m_Window)
+    window->windowGL = glfwCreateWindow(window->width, window->height, window->title, NULL, NULL);
+    if (!window->windowGL)
     {
         printf("Failed to create GLFW window!\n");
         return false;
     }
 
-    glfwMakeContextCurrent(window->m_Window);
-    glfwSetWindowSizeCallback(window->m_Window, windowResize);
+    glfwMakeContextCurrent(window->windowGL);
+    glfwSetWindowSizeCallback(window->windowGL, windowResize);
 
 
     // Warning: Make sure we check glewInit after we create the context, or else it won't work
@@ -67,18 +67,18 @@ const void clear()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-const bool closed(Window_t* window)
+const bool closed(Window* window)
 {
     // printf("closed work\n");
-    return glfwWindowShouldClose(window->m_Window);
+    return glfwWindowShouldClose(window->windowGL);
     // printf("closed execute\n");
 }
 
-void update(Window_t* window)
+void update(Window* window)
 {
     // printf("update working\n");
     glfwPollEvents();
-    glfwSwapBuffers(window->m_Window);
+    glfwSwapBuffers(window->windowGL);
 }
 
 void windowResize(GLFWwindow *window, int width, int height)
@@ -86,12 +86,12 @@ void windowResize(GLFWwindow *window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-int getWidth(Window_t* window) 
+int getWidth(Window* window) 
 { 
-    return window->m_Width; 
+    return window->width; 
 }
 
-int getHeight(Window_t* window) 
+int getHeight(Window* window) 
 { 
-    return window->m_Height; 
+    return window->height; 
 }

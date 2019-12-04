@@ -5,7 +5,7 @@ int main()
 {
     clock_t begin = clock();
 
-    Window_t* window = windowCreate("Torpo!", 960, 540);
+    Window* window = windowCreate("Torpo!", 960, 540);
     glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
 
 //     printf("Working\n");
